@@ -1,6 +1,8 @@
 import pandas as pd
-
+from logger import logger
 def transform_sales(df):
+
+    logger.info("Starting Data transformation")
 
     if df is None:
         return None
@@ -30,5 +32,7 @@ def transform_sales(df):
         "customer_id":"customer",
         "order_date":"date"
     })
+
+    logger.info(f"Transformation completed. Rows after transform: {len(df)}")
 
     return df

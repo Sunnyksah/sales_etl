@@ -2,8 +2,11 @@ from extract.extract_csv import extract_sales_data
 from transform.transform_sales import transform_sales
 from load.load_postgress import load_to_db
 from config import RAW_DATA_PATH
+from logger import logger
 
 def main():
+
+    logger.info("ETL pipeline started")
     #Extract
     df = extract_sales_data(RAW_DATA_PATH)
 
@@ -30,6 +33,8 @@ def main():
 
         #load
         load_to_db(df_transformed)
+
+        logger.info("ETL Pipeline completed successfully")
 
 if __name__ == "__main__":
     main()

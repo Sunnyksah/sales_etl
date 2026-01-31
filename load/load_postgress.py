@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine
+from logger import logger
 
 def load_to_db(df):
+
+    logger.info("Starting data load into PostgreSQL")
 
     if df is None or df.empty:
         print("No data to load")
@@ -18,3 +21,5 @@ def load_to_db(df):
         print(f"Loaded {len(df)} rows into postgreSQL table 'sales'")
     except Exception as e:
         print("Error loading to DB: ", e)
+    
+    logger.info("Data load completed successfully")
