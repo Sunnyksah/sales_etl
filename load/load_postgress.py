@@ -1,25 +1,46 @@
-from sqlalchemy import create_engine
+# from sqlalchemy import create_engine
+# from logger import logger
+
+# def load_to_db(df):
+
+#     logger.info("Starting data load into PostgreSQL")
+
+#     if df is None or df.empty:
+#         print("No data to load")
+#         return
+    
+#     #Database connection
+
+#     db_url = "postgresql://postgres:password@localhost:5432/salesdb"
+
+#     #create SQLALchemy engine
+#     engine = create_engine(db_url)
+
+#     try:
+#         df.to_sql("sales", engine, if_exists = "replace", index = False)
+#         print(f"Loaded {len(df)} rows into postgreSQL table 'sales'")
+#     except Exception as e:
+#         print("Error loading to DB: ", e)
+    
+#     logger.info("Data load completed successfully")
+
+
 from logger import logger
 
-def load_to_db(df):
-
-    logger.info("Starting data load into PostgreSQL")
-
-    if df is None or df.empty:
-        print("No data to load")
+def load_sales_data(df, engine):
+    if engine is None:
+        logger.error("No database engine available. Load aborted")
         return
-    
-    #Database connection
-
-    db_url = "postgresql://postgres:password@localhost:5432/salesdb"
-
-    #create SQLALchemy engine
-    engine = create_engine(db_url)
-
     try:
-        df.to_sql("sales", engine, if_exists = "replace", index = False)
-        print(f"Loaded {len(df)} rows into postgreSQL table 'sales'")
+        logger.info("Starting data load into postgreSQL")
+
+        df.to_sql(
+            name="sales",
+            con = engine,
+            if_exists = "append",
+            index=False,
+            method = "multi"
+        )
+        logger.info(f"Successfully loaded {len(df)} records into sales table")
     except Exception as e:
-        print("Error loading to DB: ", e)
-    
-    logger.info("Data load completed successfully")
+        logger.error(f"Error while loading data into PostgreSQL: {e}")
