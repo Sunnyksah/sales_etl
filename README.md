@@ -123,9 +123,4 @@ The transform stage handles:
 - [ ] Dockerise the pipeline
 - [ ] Schedule with Apache Airflow
 
----
 
-## Author
-
-**Your Name**
-[LinkedIn](https://linkedin.com/in/yourprofile) • [GitHub](https://github.com/yourusername)
